@@ -15,3 +15,9 @@ def lambda_handler(event, context):
     elif event['rawPath'] == CREAT_RAW_PATH:
         #Write to Database
         print("Start Request for CreatePerson")
+        decodedEvent = json.loads(event['body'])
+        firstName = decodedEvent["firstName"]
+        return {"personId": str(uuid.uuid1())}
+        
+        
+    
