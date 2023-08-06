@@ -3,3 +3,5 @@ image_retrieval/diag_txt/
 video_retrieval/video_ret
 *.DS_Store
 video_retrieval/research/.env
+front_end/front/
+*.env
