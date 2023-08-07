@@ -38,17 +38,35 @@ def get_chatgpt_answer(query):
             temperature=0,
         )
         answer = response.choices[0].message["content"]
-        print(answer)
+        #print(answer)
         return answer
     except Exception as e:
         st.error(f"Error occurred while getting ChatGPT response: {e}")
 
+# Function to get the most relevant image URL based on the search query
+def get_most_relevant_image(query):
+    try:
+        subscription_key = "YOUR_BING_SEARCH_API_KEY"  # Replace with your Bing Search API key
+        assert subscription_key
+
+        search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
+        headers = {"Ocp-Apim-Subscription-Key": subscription_key}
+        params = {"q": query, "count": 1}
+
+        response = requests.get(search_url, headers=headers, params=params)
+        response.raise_for_status()
+
+        search_results = response.json()
+        return search_results["value"][0]["thumbnailUrl"]
+    except Exception as e:
+        st.error(f"Error occurred while fetching image: {e}")
+
 # Main Streamlit app
 def main():
-    st.title("YouTube Video and ChatGPT Search")
+    st.title("Lesson Generator 👨🏻‍🏫")
 
     # Input for search query
-    search_query = st.text_input("Enter your search query:")
+    search_query = st.text_input("Ask me a question!")
 
     if st.button("Search"):
         if search_query:
